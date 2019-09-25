@@ -15,7 +15,7 @@ public class FachadaEscalonador {
 	private String bloqueado;
 	private String finalizado, sobrou;
 	private MinhaFachada status = new MinhaFachada();
-	private int controle, tempoPrafinalizar,sobra,tempo,variavel, newtempo;
+	private int controle, tempoPrafinalizar,sobra,tempo,variavel;
 	
 
 	public FachadaEscalonador(TipoEscalonador tipoEscalonador) {
