@@ -1,8 +1,6 @@
 package br.ufpb.dcx.aps.escalonador;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class FachadaEscalonador {
@@ -15,7 +13,7 @@ public class FachadaEscalonador {
 	private String bloqueado;
 	private String finalizado, sobrou;
 	private MinhaFachada status = new MinhaFachada();
-	private int controle, tempoPrafinalizar,sobra,tempo,variavel;
+	private int controle, tempoPrafinalizar,sobra,tempo,variavel, newtempo;
 	
 
 	public FachadaEscalonador(TipoEscalonador tipoEscalonador) {
@@ -49,6 +47,7 @@ public class FachadaEscalonador {
 	}
 
 	public void tick() {
+		
 		tick++;
 		if (variavel == 0) {
 			quemTanafila();
@@ -104,9 +103,18 @@ public class FachadaEscalonador {
 	}
 
 	public void adicionarProcesso(String nomeProcesso) {
+		
+		if (tipo == TipoEscalonador.MaisCurtoPrimeiro) {
+			throw new EscalonadorException();
+
+		}
 	}
 
 	public void adicionarProcesso(String nomeProcesso, int prioridade) {
+		if(tipo == TipoEscalonador.MaisCurtoPrimeiro && prioridade > 0) {
+			throw new EscalonadorException();
+
+		}
 	}
 
 	public void finalizarProcesso(String nomeProcesso) {
@@ -121,6 +129,15 @@ public class FachadaEscalonador {
 	}
 
 	public void adicionarProcessoTempoFixo(String string, int duracao) {
+		
+		if(fila.contains(string) || string == null) {
+			throw new EscalonadorException();
+		}
+		if(duracao < 1) {
+			throw new EscalonadorException();
+		}
+		
+		
 
 		fila.add(string);
 		this.controle = duracao;
@@ -154,7 +171,8 @@ public class FachadaEscalonador {
 				if(tick == 1) {
 					fila.poll();
 					fila.add(sobrou);
-				}
+				} 
+				
 			}
 		}
 
